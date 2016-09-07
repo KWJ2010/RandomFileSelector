@@ -152,6 +152,20 @@ namespace RandomFileSelector
                 }
             }
         }
+
+        private static string _windowTitle;
+        public static string WindowTitle
+        {
+            get { return _copyrightLabel; }
+            set
+            {
+                if (value != _windowTitle)
+                {
+                    _windowTitle = value;
+                    NotifyStaticPropertyChanged("WindowTitle");
+                }
+            }
+        }
         #endregion //Interface Variables
 
         public static void SetDefaultWorkspace()
@@ -166,6 +180,16 @@ namespace RandomFileSelector
             ForegroundColor = new SolidColorBrush(Color.FromArgb(255, 252, 252, 252));
 
             CopyrightLabel = "Provided by: KWJ2010, All rights Reserved";
+            WindowTitle = "Randomized File Selector";
         }
+
+        #region Helper Methods
+        public static void ResetColors()
+        {
+            BackgroundColor = NormalColor;
+            BorderColor = NormalColor;
+            ForegroundColor = new SolidColorBrush(Color.FromArgb(255, 252, 252, 252));
+        }
+        #endregion
     }
 }

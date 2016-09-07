@@ -37,11 +37,11 @@ namespace RandomFileSelector
         }
         #endregion // Public Properties
 
-            #region Constructor
+        #region Constructor
         public RandomFileSelectorModel()
         {
-            SourcePath = "This is a sourcepath test";
-            DestinationPath = "DestinationPath Test!";
+            SourcePath = "";
+            DestinationPath = "";
         }
         #endregion //Constructor
 

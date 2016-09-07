@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,8 +19,11 @@ namespace RandomFileSelector
         private ICommand _saveSettings_Command;
         private ICommand _exportResults_Command;
         private ICommand _printResults_Command;
-        #endregion //Private ICommands
 
+        private ICommand selectSourcePathCommand;
+        private ICommand selectDestinationPathCommand;
+        private ICommand copyFilesCommand;
+        #endregion //Private ICommands
         #region Public Commands
         [XmlIgnore]
         public ICommand NewSettings_Command
@@ -46,6 +50,22 @@ namespace RandomFileSelector
         {
             get { return _printResults_Command ?? (_printResults_Command = new ICommandBase(() => PrintResults())); }
         }
+
+        [XmlIgnore]
+        public ICommand SelectSourcePathCommand
+        {
+            get { return selectSourcePathCommand ?? (selectSourcePathCommand = new ICommandBase(() => SelectSource())); }
+        }
+        [XmlIgnore]
+        public ICommand SelectDestinationPathCommand
+        {
+            get { return selectDestinationPathCommand ?? (selectDestinationPathCommand = new ICommandBase(() => SelectDestination())); }
+        }
+        [XmlIgnore]
+        public ICommand CopyFilesCommand
+        {
+            get { return copyFilesCommand ?? (copyFilesCommand = new ICommandBase(() => StartCopyFiles())); }
+        }
         #endregion //Public Commands
         #endregion //ICommands
 
@@ -68,7 +88,7 @@ namespace RandomFileSelector
         #region Constructor
         public RandomFileSelectorViewModel()
         {
-           // CurrentModel = new RandomFileSelectorModel();
+            // CurrentModel = new RandomFileSelectorModel();
         }
         #endregion //Constructor
 
@@ -81,12 +101,12 @@ namespace RandomFileSelector
         private void OpenSettings()
         {
             //  MessageBox.Show(this.ToString() + "  Open");
-            MessageBox.Show("This feature is not currently implemented");
+           MessageBox.Show("This feature is not currently implemented");
         }
         private void SaveSettings()
         {
             // MessageBox.Show(this.ToString() + "  Save");
-            MessageBox.Show("This feature is not currently implemented");
+           MessageBox.Show("This feature is not currently implemented");
         }
         private void ExportResults()
         {
@@ -100,5 +120,54 @@ namespace RandomFileSelector
         }
         #endregion
 
+        #region Private Methods
+        private void SelectSource()
+        {
+            //FolderBrowserDialog sucks. 
+            //TODO: Make a custom file&folder browser to replace this with.
+            System.Windows.Forms.FolderBrowserDialog FBD = new System.Windows.Forms.FolderBrowserDialog();
+            FBD.ShowDialog();
+            if (!string.IsNullOrWhiteSpace(FBD.SelectedPath))
+            {
+                SourcePath = FBD.SelectedPath;
+            }
+
+        }
+
+        private void SelectDestination()
+        {
+            System.Windows.Forms.FolderBrowserDialog FBD = new System.Windows.Forms.FolderBrowserDialog();
+            FBD.ShowDialog();
+            if (!string.IsNullOrWhiteSpace(FBD.SelectedPath))
+            {
+                DestinationPath = FBD.SelectedPath;
+            }
+        }
+
+        private void StartCopyFiles()
+        {
+            //Change colors, check for errors, copy files
+            if (CheckInputs())
+            {
+                Workspace.BackgroundColor = Workspace.GoodColor;
+                Workspace.BorderColor = Workspace.GoodColor;
+                CopyFiles();
+            }
+        }
+
+        private void CopyFiles()
+        {
+            //TODO: make async process
+
+
+
+        }
+
+        private bool CheckInputs()
+        {
+            if (SourcePath != "" &&  DestinationPath !="") return true;
+            else return false;
+        }
+        #endregion //Private Methods
     }
 }

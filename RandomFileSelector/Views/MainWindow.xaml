@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RandomFileSelector"
         SnapsToDevicePixels="True" UseLayoutRounding="True" WindowStartupLocation="CenterScreen"
-        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        WindowStyle="None" AllowsTransparency="True" ResizeMode="CanResize"
         Icon="pack://application:,,,/RandomFileSelector;component/Themes/Icons/FileSwapBlue.png"
         MouseLeftButtonDown="MoveWindow"
-        ResizeMode="CanMinimize"
-        mc:Ignorable="d"
-        Title="File Randomizer"
+        Background="Transparent"
+        Foreground="WhiteSmoke"
+        Title="{Binding Path=(local:Workspace.WindowTitle), UpdateSourceTrigger=PropertyChanged}"
         Height="350"
-        Width="525"
+        Width="550"
         >
 
     <Border x:Name="Border" BorderBrush="{Binding Path=(local:Workspace.BorderColor), UpdateSourceTrigger=PropertyChanged}" BorderThickness="2" Margin="9" >
@@ -132,25 +132,62 @@
             <!-- Content -->
             <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" >
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="25"/>
-                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="auto" MinHeight="25"/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="auto" MinHeight="25"/>
                     <RowDefinition Height="25"/>
                     <RowDefinition Height="25"/>
                     <RowDefinition Height="25"/>
                     <RowDefinition Height="25"/>
                     <RowDefinition Height="25"/>
                 </Grid.RowDefinitions>
-                <Label x:Name="DestinationPathLabel" Content="{Binding Path=DestinationPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <StackPanel Margin="10">
-                        <TextBlock Text="This is a textblock"/>
-                        <TextBox Text="{Binding Path=SourcePath, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                        <Label Content="{Binding Path=DestinationPath, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Foreground="Black" FontSize="48"/>
-                    </StackPanel>
+                <Grid.Resources>
+                    <ResourceDictionary>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ToolBarButtonStyle}">
+                            <Setter Property="Foreground" Value="{StaticResource White}"/>
+                            <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                            <Setter Property="Margin" Value="0,0,10,0"/>
+                            <Setter Property="BorderBrush" Value="{Binding Path=(local:Workspace.BackgroundColor), UpdateSourceTrigger=PropertyChanged}"/>
+                            <Setter Property="Width"  Value="155"/>
+                            <Setter Property="Height" Value="25"/>
+                        </Style>
+                        <Style TargetType="{x:Type Label}" >
+                            <Setter Property="Margin" Value="0,0,3,0"/>
+                            <Setter Property="Height" Value="25"/>
+                            <Setter Property="Foreground" Value="{StaticResource White}"/>
+                        </Style>
+                    </ResourceDictionary>
+                </Grid.Resources>
+                <Button x:Name="SelectSourcePath" Command="{Binding SelectSourcePathCommand}" Grid.Column="0" Grid.Row="1" Content="Select Source Folder"/>
+
+                <TextBlock x:Name="SourcePathLabel" Text="{Binding Path=SourcePath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                       Grid.Column="1" Grid.Row="1" IsEnabled="False" TextWrapping="WrapWithOverflow"
+                       />
+                
+                <Button x:Name="SelectDestinationPath" Command="{Binding SelectDestinationPathCommand}"  Grid.Column="0" Grid.Row="3" Content="Select Destination Folder"/>
+
+                <TextBlock x:Name="DestinationPathLabel" Text="{Binding Path=DestinationPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                       Grid.Column="1" Grid.Row="3" IsEnabled="False" TextWrapping="WrapWithOverflow"
+                       />
+
+                <Button x:Name="CopyButton" Command="{Binding CopyFilesCommand}" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="3"
+                        Content="Copy Random Files from Source location to Destination!"
+                        
+                        BorderThickness="1"
+                        Width="auto"
+                        >
+                    <!--<Button.Triggers>
+                        <EventTrigger RoutedEvent="Button.Click">
+                            <BeginStoryboard Storyboard="{StaticResource ToggleColors}"/>
+                        </EventTrigger>
+                    </Button.Triggers>-->
+                </Button>
 
             </Grid>
 
