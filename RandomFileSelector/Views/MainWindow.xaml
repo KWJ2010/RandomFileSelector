@@ -14,11 +14,169 @@
         Height="350"
         Width="525"
         >
-    <Grid>
-        <StackPanel Margin="10">
-            <TextBlock Text="This is a textblock"/>
-            <TextBox Text="{Binding Path=SourcePath, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-            <Label Content="{Binding Path=DestinationPath, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Foreground="Black" FontSize="48"/>
-        </StackPanel>
-    </Grid>
+
+    <Border x:Name="Border" BorderBrush="{Binding Path=(local:Workspace.BorderColor), UpdateSourceTrigger=PropertyChanged}" BorderThickness="2" Margin="9" >
+        <Border.Background>
+            <SolidColorBrush Color="Black" Opacity="0.65"/>
+        </Border.Background>
+        <Border.Effect>
+            <DropShadowEffect Opacity="0.7" Color="DarkBlue" BlurRadius="18" RenderingBias="Quality" 
+             ShadowDepth="1" RenderOptions.BitmapScalingMode="HighQuality" Direction="330"/>
+        </Border.Effect>
+
+        <Grid Margin="3,0,3,0" Background="Transparent">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!--TITLE BAR-->
+            <Grid x:Name="TitleBar" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
+                  KeyboardNavigation.TabNavigation="None"
+                  UseLayoutRounding="True"
+                  Background="Black"
+                  Margin="1,0,1,0"
+                  >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!--TODO: update icon-->
+                <Image Grid.Column="0" Grid.Row="0" Source="pack://application:,,,/RandomFileSelector;component/Themes/Icons/FileSwapblue.png" Width="20"/>
+
+                <!--TODO: Bind this title to update to the name of the source and destination folders -->
+                <Label Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2" Content="Randomized File Copier // Pull music to your USB"/>
+
+                <Button x:Name="MinButton" Grid.Column="2" Grid.Row="0" Style="{StaticResource TitleBarButtonStyle}" 
+                        Click="MinimizeButton_Clicked"
+                        VerticalContentAlignment="Top"
+                        VerticalAlignment="Top" 
+                        ToolTip="Minimize" 
+                        Margin="0,0,4,0"
+                        Height="22"
+                        Width="22"
+                        >
+                    <Image x:Name="MinButton_Image" Source="pack://application:,,,/RandomFileSelector;component/Themes/Icons/min_gray.png" />
+                </Button>
+
+                <Button x:Name="CloseButton" Grid.Row="0" Grid.Column="3" Style="{StaticResource TitleBarButtonStyle}" 
+                        Click="CloseButton_Clicked"
+                        VerticalContentAlignment="Top" 
+                        VerticalAlignment="Top" 
+                        Height="22"
+                        Width="22"
+                        ToolTip="Close" 
+                        >
+                    <!--TODO: Replace this Icon with the xaml style-->
+                    <Image x:Name="CloseButton_Image" Source="pack://application:,,,/RandomFileSelector;component/Themes/Icons/x_gray.png" />
+                </Button>
+            </Grid>
+
+            <!--TOOL BAR-->
+            <StackPanel x:Name="ToolBar" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"
+                        KeyboardNavigation.TabNavigation="None"
+                        Orientation="Horizontal"
+                        Background="Black"
+                        Margin="0,0,0,0"
+                        Height="22"
+                        >
+                <StackPanel.Resources>
+                    <ResourceDictionary>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ToolBarButtonStyle}">
+                            <Setter Property="Margin" Value="0,0,3,0"/>
+                            <Setter Property="Height" Value="18"/>
+                        </Style>
+                    </ResourceDictionary>
+                </StackPanel.Resources>
+
+                <Button x:Name="NewButton" ToolTip="New Settings" 
+                    Command="{Binding NewSettings_Command}"
+                    >
+                    <Image Source="pack://application:,,,/RandomFileSelector;component/Themes/Icons/new.png"/>
+                </Button>
+
+                <Button x:Name="OpenButton" ToolTip="Open Settings"  
+                    Command="{Binding OpenSettings_Command}"
+                    >
+                    <Image Source="pack://application:,,,/RandomFileSelector;component/Themes/Icons/Open.png"/>
+                </Button>
+
+                <Button x:Name="SaveButton" ToolTip="Save Settings"  
+                    Command="{Binding SaveSettings_Command}"
+                    >
+                    <Image Source="pack://application:,,,/RandomFileSelector;component/Themes/Icons/Save.png"/>
+                </Button>
+
+                <Button x:Name="PrintButton" ToolTip="Print List" 
+                    Command="{Binding PrintResults_Command}"
+                    >
+                    <Image Source="pack://application:,,,/RandomFileSelector;component/Themes/Icons/print.png"/>
+                </Button>
+
+                <Button x:Name="ExportButton" Grid.Column="4" ToolTip="Export List"
+                    Command="{Binding ExportResults_Command}"
+                    >
+                    <Image Source="pack://application:,,,/RandomFileSelector;component/Themes/Icons/export.png"/>
+                </Button>
+            </StackPanel>
+
+            <!-- Content -->
+            <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                </Grid.RowDefinitions>
+                <Label x:Name="DestinationPathLabel" Content="{Binding Path=DestinationPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <StackPanel Margin="10">
+                        <TextBlock Text="This is a textblock"/>
+                        <TextBox Text="{Binding Path=SourcePath, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                        <Label Content="{Binding Path=DestinationPath, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Foreground="Black" FontSize="48"/>
+                    </StackPanel>
+
+            </Grid>
+
+            <!--COPYRIGHT BAR-->
+            <Grid x:Name="CopyrightGrid" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3"
+                  Background="{Binding Path=(local:Workspace.BackgroundColor), UpdateSourceTrigger=PropertyChanged}" 
+                  VerticalAlignment="Center"
+                  Margin="-4,3,-4,-1"
+                  >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <ProgressBar x:Name="ProgressBar1" Grid.Column="0" Grid.Row="0" Visibility="Collapsed" >
+                </ProgressBar>
+                <Label x:Name="CopyrightLabel" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
+                       Foreground="{Binding Path=(local:Workspace.ForegroundColor), UpdateSourceTrigger=PropertyChanged}"
+                       Content="{Binding Path=(local:Workspace.CopyrightLabel), UpdateSourceTrigger=PropertyChanged}"
+                       Background="Transparent" 
+                       FontWeight="Normal" 
+                       FontSize="11.0"
+                       />
+            </Grid>
+        </Grid>
+    </Border>
 </Window>

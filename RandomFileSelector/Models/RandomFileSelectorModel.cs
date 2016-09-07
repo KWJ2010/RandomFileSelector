@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace RandomFileSelector
 {
+    /// <summary>
+    /// This Model stores the data types that will be used by this program
+    /// </summary>
     class RandomFileSelectorModel : INotifyBase
     {
         #region Private Fields

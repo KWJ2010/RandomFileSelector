@@ -68,7 +68,7 @@ namespace RandomFileSelector
         #region Constructor
         public RandomFileSelectorViewModel()
         {
-            //CurrentModel = new RandomFileSelectorModel();
+           // CurrentModel = new RandomFileSelectorModel();
         }
         #endregion //Constructor
 
