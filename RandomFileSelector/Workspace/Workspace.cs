@@ -27,7 +27,6 @@ namespace RandomFileSelector
         #endregion // Static INotify Event
 
         #region Interface Variables
-
         private static SolidColorBrush _warningColor;
         [XmlIgnore]
         public static SolidColorBrush WarningColor
@@ -168,6 +167,10 @@ namespace RandomFileSelector
         }
         #endregion //Interface Variables
 
+        #region Public Fields
+        public static Random RandomNumber = new Random();
+        #endregion // Public Fields
+
         public static void SetDefaultWorkspace()
         {
             WarningColor = new SolidColorBrush(Color.FromArgb(255, 238, 150, 25));
@@ -183,13 +186,23 @@ namespace RandomFileSelector
             WindowTitle = "Randomized File Selector";
         }
 
-        #region Helper Methods
+        #region Public Methods
+        /// <summary>
+        /// Resets Interface colors to the default
+        /// </summary>
         public static void ResetColors()
         {
             BackgroundColor = NormalColor;
             BorderColor = NormalColor;
             ForegroundColor = new SolidColorBrush(Color.FromArgb(255, 252, 252, 252));
         }
-        #endregion
+        /// <summary>
+        /// Resets the Copyright text
+        /// </summary>
+        public static void ResetCopyright()
+        {
+            CopyrightLabel = "Provided by: KWJ2010, All rights Reserved";
+        }
+        #endregion //Public Methods
     }
 }

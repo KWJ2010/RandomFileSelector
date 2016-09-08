@@ -123,6 +123,8 @@ namespace RandomFileSelector
         #region Private Methods
         private void SelectSource()
         {
+            Workspace.ResetColors();
+            Workspace.ResetCopyright();
             //FolderBrowserDialog sucks. 
             //TODO: Make a custom file&folder browser to replace this with.
             System.Windows.Forms.FolderBrowserDialog FBD = new System.Windows.Forms.FolderBrowserDialog();
@@ -136,6 +138,8 @@ namespace RandomFileSelector
 
         private void SelectDestination()
         {
+            Workspace.ResetColors();
+            Workspace.ResetCopyright();
             System.Windows.Forms.FolderBrowserDialog FBD = new System.Windows.Forms.FolderBrowserDialog();
             FBD.ShowDialog();
             if (!string.IsNullOrWhiteSpace(FBD.SelectedPath))
@@ -151,6 +155,7 @@ namespace RandomFileSelector
             {
                 Workspace.BackgroundColor = Workspace.GoodColor;
                 Workspace.BorderColor = Workspace.GoodColor;
+
                 CopyFiles();
             }
         }
@@ -158,15 +163,33 @@ namespace RandomFileSelector
         private void CopyFiles()
         {
             //TODO: make async process
-
-
+            /*
+             * Display and select file types e.g. "*.mp3, *.mp4" etc
+             * Build list of avalable files in source with the selected file type(s)
+             * Measuere size avalible in destination
+             * build new list of randomly selected files that total size is <= avalible/ allocated space
+             * copy that new list
+             */
 
         }
 
         private bool CheckInputs()
         {
-            if (SourcePath != "" &&  DestinationPath !="") return true;
-            else return false;
+            if(SourcePath == "")
+            {
+                Workspace.BackgroundColor = Workspace.ErrorColor;
+                Workspace.BorderColor = Workspace.ErrorColor;
+                Workspace.CopyrightLabel = "Error! Please select a Source Folder!";
+                return false;
+            } 
+            else if (DestinationPath == "")
+            {
+                Workspace.BackgroundColor = Workspace.ErrorColor;
+                Workspace.BorderColor = Workspace.ErrorColor;
+                Workspace.CopyrightLabel = "Error! Please select a Destination Folder!";
+                return false;
+            }
+            return true;
         }
         #endregion //Private Methods
     }

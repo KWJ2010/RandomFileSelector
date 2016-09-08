@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ namespace RandomFileSelector
         #region Private Fields
         private string sourcePath;
         private string destinationPath;
+        private ObservableCollection<string> fileExtensionTypes;
         #endregion //Private Fields
 
         #region Public Properties
@@ -35,6 +37,15 @@ namespace RandomFileSelector
                 Notify(this, "DestinationPath");
             }
         }
+        public ObservableCollection<string> FileExtensionTypes
+        {
+            get { return fileExtensionTypes; }
+            set
+            {
+                fileExtensionTypes = value;
+                Notify(this, "FileExtensionTypes");
+            }
+        }
         #endregion // Public Properties
 
         #region Constructor
@@ -42,6 +53,8 @@ namespace RandomFileSelector
         {
             SourcePath = "";
             DestinationPath = "";
+            FileExtensionTypes = new ObservableCollection<string>();
+            FileExtensionTypes.Add(".mp3");
         }
         #endregion //Constructor
 

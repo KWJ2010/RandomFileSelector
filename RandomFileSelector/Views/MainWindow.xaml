@@ -141,6 +141,8 @@
                     <RowDefinition Height="auto" MinHeight="25"/>
                     <RowDefinition Height="5"/>
                     <RowDefinition Height="auto" MinHeight="25"/>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="25"/>
                     <RowDefinition Height="25"/>
                     <RowDefinition Height="25"/>
                     <RowDefinition Height="25"/>
@@ -176,18 +178,21 @@
                        Grid.Column="1" Grid.Row="3" IsEnabled="False" TextWrapping="WrapWithOverflow"
                        />
 
+                <!--Make toggle buttons for popular file types-->
+                <!--Eventually make a combobox with all file types-->
+
+                <TextBlock Text="Only *.mp3 files are included in this operation" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="4" VerticalAlignment="Center"/>
+
                 <Button x:Name="CopyButton" Command="{Binding CopyFilesCommand}" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="3"
                         Content="Copy Random Files from Source location to Destination!"
-                        
                         BorderThickness="1"
                         Width="auto"
                         >
-                    <!--<Button.Triggers>
-                        <EventTrigger RoutedEvent="Button.Click">
-                            <BeginStoryboard Storyboard="{StaticResource ToggleColors}"/>
-                        </EventTrigger>
-                    </Button.Triggers>-->
                 </Button>
+
+                <!--Row 5 is for a progress bar for gathering the calculated size the source path is selected, or once the source and extensions are picked in the future-->
+                <!--Row 6 is for a progress bar for gathering the avalible space once the destination path is selected-->
+                <!--Row 7 is for the progress bar showing the steps of the list building and copying-->
 
             </Grid>
 
