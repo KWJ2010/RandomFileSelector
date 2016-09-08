@@ -9,7 +9,7 @@
         Icon="pack://application:,,,/RandomFileSelector;component/Themes/Icons/FileSwapBlue.png"
         MouseLeftButtonDown="MoveWindow"
         Background="Transparent"
-        Foreground="WhiteSmoke"
+        Foreground="Black"
         Title="{Binding Path=(local:Workspace.WindowTitle), UpdateSourceTrigger=PropertyChanged}"
         Height="350"
         Width="550"
@@ -17,7 +17,7 @@
 
     <Border x:Name="Border" BorderBrush="{Binding Path=(local:Workspace.BorderColor), UpdateSourceTrigger=PropertyChanged}" BorderThickness="2" Margin="9" >
         <Border.Background>
-            <SolidColorBrush Color="Black" Opacity="0.65"/>
+            <SolidColorBrush Color="WhiteSmoke" Opacity="0.95"/>
         </Border.Background>
         <Border.Effect>
             <DropShadowEffect Opacity="0.7" Color="DarkBlue" BlurRadius="18" RenderingBias="Quality" 
@@ -40,7 +40,7 @@
             <Grid x:Name="TitleBar" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
                   KeyboardNavigation.TabNavigation="None"
                   UseLayoutRounding="True"
-                  Background="Black"
+                  Background="WhiteSmoke"
                   Margin="1,0,1,0"
                   >
                 <Grid.ColumnDefinitions>
@@ -85,7 +85,7 @@
             <StackPanel x:Name="ToolBar" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"
                         KeyboardNavigation.TabNavigation="None"
                         Orientation="Horizontal"
-                        Background="Black"
+                        Background="WhiteSmoke"
                         Margin="0,0,0,0"
                         Height="22"
                         >
@@ -150,7 +150,7 @@
                 <Grid.Resources>
                     <ResourceDictionary>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ToolBarButtonStyle}">
-                            <Setter Property="Foreground" Value="{StaticResource White}"/>
+                            <Setter Property="Foreground" Value="{StaticResource Black}"/>
                             <Setter Property="BorderThickness" Value="0,0,1,1"/>
                             <Setter Property="Margin" Value="0,0,10,0"/>
                             <Setter Property="BorderBrush" Value="{Binding Path=(local:Workspace.BackgroundColor), UpdateSourceTrigger=PropertyChanged}"/>
