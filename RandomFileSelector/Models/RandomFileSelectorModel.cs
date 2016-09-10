@@ -81,7 +81,14 @@ namespace RandomFileSelector
         #endregion //Constructor
 
         #region Private Methods
-
+        public void ClearAll()
+        {
+            SourcePath = "";
+            DestinationPath = "";
+            SourceSize = "";
+            DestinationSize = "";
+            FileExtensionType = "*.mp3";
+        }
         #endregion
     }
 }

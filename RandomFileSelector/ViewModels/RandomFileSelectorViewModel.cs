@@ -102,8 +102,7 @@ namespace RandomFileSelector
         #region ToolBar Methods
         private void NewSettings()
         {
-            // MessageBox.Show(this.ToString() + "  New");
-            MessageBox.Show("This feature is not currently implemented");
+            ClearAll();
         }
         private void OpenSettings()
         {
@@ -115,10 +114,21 @@ namespace RandomFileSelector
             // MessageBox.Show(this.ToString() + "  Save");
             MessageBox.Show("This feature is not currently implemented");
         }
+        /// <summary>
+        /// Creates a .txt file in the distination folder of the list of files copied
+        /// </summary>
         private void ExportResults()
         {
-            // MessageBox.Show(this.ToString() + "  Export");
-            MessageBox.Show("This feature is not currently implemented");
+            if (SourceFileList != null && DestinationPath != "")
+            {
+                using (StreamWriter file = new StreamWriter(DestinationPath +"\\FileList.txt"))
+                {
+                    foreach (string FileName in SourceFileList)
+                    {
+                        file.WriteLine(FileName);
+                    }
+                }
+            }
         }
         private void PrintResults()
         {
@@ -163,7 +173,6 @@ namespace RandomFileSelector
             {
                 Workspace.BackgroundColor = Workspace.GoodColor;
                 Workspace.BorderColor = Workspace.GoodColor;
-
                 CopyFiles();
             }
         }
