@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -85,10 +86,16 @@ namespace RandomFileSelector
         //}
         #endregion // Public Properties
 
+        #region Local Variables
+        private long sourceSizeBytes;
+        private long destinationSizeBytes;
+        #endregion // Local Variables
+
         #region Constructor
         public RandomFileSelectorViewModel()
         {
-            // CurrentModel = new RandomFileSelectorModel();
+            sourceSizeBytes = 0;
+            destinationSizeBytes = 0;
         }
         #endregion //Constructor
 
@@ -101,12 +108,12 @@ namespace RandomFileSelector
         private void OpenSettings()
         {
             //  MessageBox.Show(this.ToString() + "  Open");
-           MessageBox.Show("This feature is not currently implemented");
+            MessageBox.Show("This feature is not currently implemented");
         }
         private void SaveSettings()
         {
             // MessageBox.Show(this.ToString() + "  Save");
-           MessageBox.Show("This feature is not currently implemented");
+            MessageBox.Show("This feature is not currently implemented");
         }
         private void ExportResults()
         {
@@ -132,8 +139,8 @@ namespace RandomFileSelector
             if (!string.IsNullOrWhiteSpace(FBD.SelectedPath))
             {
                 SourcePath = FBD.SelectedPath;
+                MeasureSourceSize();
             }
-
         }
 
         private void SelectDestination()
@@ -145,6 +152,7 @@ namespace RandomFileSelector
             if (!string.IsNullOrWhiteSpace(FBD.SelectedPath))
             {
                 DestinationPath = FBD.SelectedPath;
+                MeasureDestinationSize();
             }
         }
 
@@ -162,7 +170,7 @@ namespace RandomFileSelector
 
         private void CopyFiles()
         {
-            //TODO: make async process
+            //TODO: make async process and add these features:
             /*
              * Display and select file types e.g. "*.mp3, *.mp4" etc
              * Build list of avalable files in source with the selected file type(s)
@@ -172,16 +180,52 @@ namespace RandomFileSelector
              */
 
         }
+        private void MeasureSourceSize()
+        {
+            //Foreach *.mp3 in Source folder(s)
+            //Add each .mp3 to an observable collection and measure the total size of those files
+            //using random number generator select files from that list and add to new list that is smaller in size than destinationSizeBytes. 
+            //Copy files in the randomlist to the destination folder.
+            GetListOfSourceFiles();
 
+        }
+        private void MeasureDestinationSize()
+        {
+            destinationSizeBytes = GetAvailableFreeSpace(Path.GetPathRoot(DestinationPath));
+            DestinationSize = ((destinationSizeBytes / 1024f) / 1024f).ToString() + " mb";
+        }
+        private void GetListOfSourceFiles()
+        {
+            string[] sourceFileList = Directory.GetFiles(SourcePath, FileExtensionType, SearchOption.AllDirectories);
+            long totalSourceSize = 0;
+            foreach (string sourceFile in sourceFileList)
+            {
+                FileInfo _fileInfo = new FileInfo(sourceFile);
+                totalSourceSize = totalSourceSize + _fileInfo.Length;
+            }
+           // SourceSize = totalSourceSize.ToString();
+            SourceSize = ((totalSourceSize / 1024f) / 1024f).ToString() + " mb";
+        }
+        private long GetAvailableFreeSpace(string driveName)
+        {
+            foreach (DriveInfo drive in DriveInfo.GetDrives())
+            {
+                if (drive.IsReady && drive.Name == driveName)
+                {
+                    return drive.AvailableFreeSpace;
+                }
+            }
+            return -1;
+        }
         private bool CheckInputs()
         {
-            if(SourcePath == "")
+            if (SourcePath == "")
             {
                 Workspace.BackgroundColor = Workspace.ErrorColor;
                 Workspace.BorderColor = Workspace.ErrorColor;
                 Workspace.CopyrightLabel = "Error! Please select a Source Folder!";
                 return false;
-            } 
+            }
             else if (DestinationPath == "")
             {
                 Workspace.BackgroundColor = Workspace.ErrorColor;

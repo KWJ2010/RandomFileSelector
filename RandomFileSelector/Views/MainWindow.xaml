@@ -171,17 +171,23 @@
                 <TextBlock x:Name="SourcePathLabel" Text="{Binding Path=SourcePath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                        Grid.Column="1" Grid.Row="1" IsEnabled="False" TextWrapping="WrapWithOverflow"
                        />
-                
+                <TextBlock x:Name="SourceSize" Text="{Binding Path=SourceSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                       Grid.Column="2" Grid.Row="1" IsEnabled="False" TextWrapping="WrapWithOverflow"
+                       />
+
+
                 <Button x:Name="SelectDestinationPath" Command="{Binding SelectDestinationPathCommand}"  Grid.Column="0" Grid.Row="3" Content="Select Destination Folder"/>
 
                 <TextBlock x:Name="DestinationPathLabel" Text="{Binding Path=DestinationPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                        Grid.Column="1" Grid.Row="3" IsEnabled="False" TextWrapping="WrapWithOverflow"
                        />
-
+                <TextBlock x:Name="DestinationSize" Text="{Binding Path=DestinationSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                       Grid.Column="2" Grid.Row="3" IsEnabled="False" TextWrapping="WrapWithOverflow"
+                       />
                 <!--Make toggle buttons for popular file types-->
                 <!--Eventually make a combobox with all file types-->
 
-                <TextBlock Text="Only *.mp3 files are included in this operation" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="4" VerticalAlignment="Center"/>
+                <TextBlock Text="Only *.mp3 files are included in this operation" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="4" VerticalAlignment="Center" Margin="5,0,0,0"/>
 
                 <Button x:Name="CopyButton" Command="{Binding CopyFilesCommand}" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="3"
                         Content="Copy Random Files from Source location to Destination!"

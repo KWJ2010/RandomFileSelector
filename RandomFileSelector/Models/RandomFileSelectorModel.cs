@@ -15,7 +15,9 @@ namespace RandomFileSelector
         #region Private Fields
         private string sourcePath;
         private string destinationPath;
-        private ObservableCollection<string> fileExtensionTypes;
+        private string sourceSize;
+        private string destinationSize;
+        private string fileExtensionType;
         #endregion //Private Fields
 
         #region Public Properties
@@ -37,12 +39,32 @@ namespace RandomFileSelector
                 Notify(this, "DestinationPath");
             }
         }
-        public ObservableCollection<string> FileExtensionTypes
+        public string SourceSize
         {
-            get { return fileExtensionTypes; }
+            get { return sourceSize; }
             set
             {
-                fileExtensionTypes = value;
+                sourceSize = value;
+                Notify(this, "SourceSize");
+            }
+        }
+
+        public string DestinationSize
+        {
+            get { return destinationSize; }
+            set
+            {
+                destinationSize = value;
+                Notify(this, "DestinationSize");
+            }
+        }
+
+        public string FileExtensionType
+        {
+            get { return fileExtensionType; }
+            set
+            {
+                fileExtensionType = value;
                 Notify(this, "FileExtensionTypes");
             }
         }
@@ -53,8 +75,9 @@ namespace RandomFileSelector
         {
             SourcePath = "";
             DestinationPath = "";
-            FileExtensionTypes = new ObservableCollection<string>();
-            FileExtensionTypes.Add(".mp3");
+            SourceSize = "";
+            DestinationSize = "";
+            FileExtensionType = "*.mp3";
         }
         #endregion //Constructor
 
