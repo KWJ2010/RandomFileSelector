@@ -153,7 +153,7 @@
                     <ResourceDictionary>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ToolBarButtonStyle}">
                             <Setter Property="Foreground" Value="{StaticResource Black}"/>
-                            <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                            <Setter Property="BorderThickness" Value="1,1,1,1"/>
                             <Setter Property="Margin" Value="0,0,10,0"/>
                             <Setter Property="BorderBrush" Value="{Binding Path=(local:Workspace.BackgroundColor), UpdateSourceTrigger=PropertyChanged}"/>
                             <Setter Property="Width"  Value="155"/>

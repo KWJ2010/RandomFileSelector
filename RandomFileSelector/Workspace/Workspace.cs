@@ -203,6 +203,18 @@ namespace RandomFileSelector
         {
             CopyrightLabel = "Provided by: KWJ2010, All rights Reserved";
         }
+
+        public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> source)
+        {
+            T[] elements = source.ToArray();
+            for (int i = elements.Length - 1; i >= 0; i--)
+            {
+                // Swap element "i" with a random earlier element it (or itself)
+                int swapIndex = Workspace.RandomNumber.Next(i + 1);
+                yield return elements[swapIndex];
+                elements[swapIndex] = elements[i];
+            }
+        }
         #endregion //Public Methods
     }
 }

@@ -10,7 +10,7 @@ namespace RandomFileSelector
     /// <summary>
     /// This Model stores the data types that will be used by this program
     /// </summary>
-    class RandomFileSelectorModel : INotifyBase
+    public class RandomFileSelectorModel : INotifyBase
     {
         #region Private Fields
         private string sourcePath;
@@ -48,7 +48,6 @@ namespace RandomFileSelector
                 Notify(this, "SourceSize");
             }
         }
-
         public string DestinationSize
         {
             get { return destinationSize; }
@@ -58,7 +57,6 @@ namespace RandomFileSelector
                 Notify(this, "DestinationSize");
             }
         }
-
         public string FileExtensionType
         {
             get { return fileExtensionType; }
@@ -68,6 +66,7 @@ namespace RandomFileSelector
                 Notify(this, "FileExtensionTypes");
             }
         }
+        public string[] SourceFileList { get; set; }
         #endregion // Public Properties
 
         #region Constructor

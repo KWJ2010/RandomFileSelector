@@ -11,7 +11,7 @@ using System.Xml.Serialization;
 
 namespace RandomFileSelector
 {
-    class RandomFileSelectorViewModel : RandomFileSelectorModel
+    public class RandomFileSelectorViewModel : RandomFileSelectorModel
     {
         #region ICommands
         #region Private Commands
@@ -170,24 +170,32 @@ namespace RandomFileSelector
 
         private void CopyFiles()
         {
-            //TODO: make async process and add these features:
-            /*
-             * Display and select file types e.g. "*.mp3, *.mp4" etc
-             * Build list of avalable files in source with the selected file type(s)
-             * Measuere size avalible in destination
-             * build new list of randomly selected files that total size is <= avalible/ allocated space
-             * copy that new list
-             */
+            //using random number generator select files from that list and add to new list that is smaller in size than destinationSizeBytes. 
+            //Randomly shuffle list, then starting at top add each to a new list  (randomlist) until space requirements are met.
+            //Copy files in the randomlist to the destination folder.
 
+            SourceFileList.Shuffle(); //TODO: make this work
+           // string[] files = System.IO.Directory.GetFiles(SourceFileList);
+
+            // Copy the files and overwrite destination files if they already exist.
+            foreach (string s in SourceFileList)
+            {
+                // Use static Path methods to extract only the file name from the path.
+                string fileName = System.IO.Path.GetFileName(s);
+                string destFile = System.IO.Path.Combine(DestinationPath, fileName);
+                System.IO.File.Copy(s, destFile, true); //True overwrites files in the destination  if they have the same name
+            }
         }
         private void MeasureSourceSize()
         {
-            //Foreach *.mp3 in Source folder(s)
-            //Add each .mp3 to an observable collection and measure the total size of those files
-            //using random number generator select files from that list and add to new list that is smaller in size than destinationSizeBytes. 
-            //Copy files in the randomlist to the destination folder.
             GetListOfSourceFiles();
-
+            long totalSourceSize = 0;
+            foreach (string sourceFile in SourceFileList)
+            {
+                FileInfo _fileInfo = new FileInfo(sourceFile);
+                totalSourceSize = totalSourceSize + _fileInfo.Length;
+            }
+            SourceSize = ((totalSourceSize / 1024f) / 1024f).ToString() + " mb";
         }
         private void MeasureDestinationSize()
         {
@@ -196,15 +204,7 @@ namespace RandomFileSelector
         }
         private void GetListOfSourceFiles()
         {
-            string[] sourceFileList = Directory.GetFiles(SourcePath, FileExtensionType, SearchOption.AllDirectories);
-            long totalSourceSize = 0;
-            foreach (string sourceFile in sourceFileList)
-            {
-                FileInfo _fileInfo = new FileInfo(sourceFile);
-                totalSourceSize = totalSourceSize + _fileInfo.Length;
-            }
-           // SourceSize = totalSourceSize.ToString();
-            SourceSize = ((totalSourceSize / 1024f) / 1024f).ToString() + " mb";
+            SourceFileList = Directory.GetFiles(SourcePath, FileExtensionType, SearchOption.AllDirectories);
         }
         private long GetAvailableFreeSpace(string driveName)
         {
@@ -235,6 +235,7 @@ namespace RandomFileSelector
             }
             return true;
         }
+
         #endregion //Private Methods
     }
 }
