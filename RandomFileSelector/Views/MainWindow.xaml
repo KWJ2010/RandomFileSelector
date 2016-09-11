@@ -10,7 +10,7 @@
         MouseLeftButtonDown="MoveWindow"
         Background="Transparent"
         Foreground="Black"
-        Title="{Binding Path=(local:Workspace.WindowTitle), UpdateSourceTrigger=PropertyChanged}"
+        Title="{Binding Path=(local:Workspace.WindowTitle), UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
         Height="350"
         Width="550"
         >
@@ -104,7 +104,7 @@
                     <Image Source="pack://application:,,,/RandomFileSelector;component/Themes/Icons/new.png"/>
                 </Button>
 
-                <Button x:Name="OpenButton" ToolTip="Open Settings"  
+                <!--<Button x:Name="OpenButton" ToolTip="Open Settings"  
                     Command="{Binding OpenSettings_Command}"
                     >
                     <Image Source="pack://application:,,,/RandomFileSelector;component/Themes/Icons/Open.png"/>
@@ -120,7 +120,7 @@
                     Command="{Binding PrintResults_Command}"
                     >
                     <Image Source="pack://application:,,,/RandomFileSelector;component/Themes/Icons/print.png"/>
-                </Button>
+                </Button>-->
 
                 <Button x:Name="ExportButton" Grid.Column="4" ToolTip="Export List"
                     Command="{Binding ExportResults_Command}"

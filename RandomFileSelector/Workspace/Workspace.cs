@@ -182,8 +182,8 @@ namespace RandomFileSelector
             BorderColor = NormalColor;
             ForegroundColor = new SolidColorBrush(Color.FromArgb(255, 252, 252, 252));
 
-            CopyrightLabel = "Provided by: KWJ2010, All rights Reserved";
             WindowTitle = "Randomized File Selector";
+            CopyrightLabel = "Provided by: KWJ2010, All rights Reserved";
         }
 
         #region Public Methods
@@ -202,19 +202,6 @@ namespace RandomFileSelector
         public static void ResetCopyright()
         {
             CopyrightLabel = "Provided by: KWJ2010, All rights Reserved";
-        }
-
-        public static void Shuffle<T>(T[] array)
-        {
-            int n = array.Length;
-            for (int i = 0; i < n; i++)
-            {
-                // NextDouble returns a random number between 0 and 1.
-                int r = i + (int)(Workspace.RandomNumber.NextDouble() * (n - i));
-                T t = array[r];
-                array[r] = array[i];
-                array[i] = t;
-            }
         }
         #endregion //Public Methods
     }

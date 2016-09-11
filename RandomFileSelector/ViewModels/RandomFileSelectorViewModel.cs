@@ -70,22 +70,6 @@ namespace RandomFileSelector
         #endregion //Public Commands
         #endregion //ICommands
 
-        #region Private Fields
-        //RandomFileSelectorModel currentModel;
-        #endregion //Private Fields
-
-        #region Public Properties
-        //RandomFileSelectorModel CurrentModel
-        //{
-        //    get { return currentModel; }
-        //    set
-        //    {
-        //        currentModel = value;
-        //        Notify(this, "CurrentModel");
-        //    }
-        //}
-        #endregion // Public Properties
-
         #region Local Variables
         private long sourceSizeBytes;
         private long destinationSizeBytes;
@@ -152,7 +136,6 @@ namespace RandomFileSelector
                 MeasureSourceSize();
             }
         }
-
         private void SelectDestination()
         {
             Workspace.ResetColors();
@@ -165,7 +148,6 @@ namespace RandomFileSelector
                 MeasureDestinationSize();
             }
         }
-
         private void StartCopyFiles()
         {
             //Change colors, check for errors, copy files
@@ -173,16 +155,13 @@ namespace RandomFileSelector
             {
                 Workspace.BackgroundColor = Workspace.GoodColor;
                 Workspace.BorderColor = Workspace.GoodColor;
+                Shuffle(SourceFileList);
                 CopyFiles();
             }
         }
-
         private void CopyFiles()
         {
             //TODO: figure out how to limit the amount copied to stay within space requirements
-
-            Workspace.Shuffle(SourceFileList);
-
             // Copy the files and overwrite destination files if they already exist.
             foreach (string s in SourceFileList)
             {
@@ -240,6 +219,18 @@ namespace RandomFileSelector
                 return false;
             }
             return true;
+        }
+        private void Shuffle<T>(T[] array)
+        {
+            int n = array.Length;
+            for (int i = 0; i < n; i++)
+            {
+                // NextDouble returns a random number between 0 and 1.
+                int r = i + (int)(Workspace.RandomNumber.NextDouble() * (n - i));
+                T t = array[r];
+                array[r] = array[i];
+                array[i] = t;
+            }
         }
         #endregion //Private Methods
     }

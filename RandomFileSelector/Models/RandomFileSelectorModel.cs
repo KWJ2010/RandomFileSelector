@@ -88,6 +88,7 @@ namespace RandomFileSelector
             SourceSize = "";
             DestinationSize = "";
             FileExtensionType = "*.mp3";
+            Array.Clear(SourceFileList, 0, SourceFileList.Length);
         }
         #endregion
     }
