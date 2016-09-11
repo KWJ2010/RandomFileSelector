@@ -179,20 +179,17 @@ namespace RandomFileSelector
 
         private void CopyFiles()
         {
-            //using random number generator select files from that list and add to new list that is smaller in size than destinationSizeBytes. 
-            //Randomly shuffle list, then starting at top add each to a new list  (randomlist) until space requirements are met.
-            //Copy files in the randomlist to the destination folder.
+            //TODO: figure out how to limit the amount copied to stay within space requirements
 
-            SourceFileList.Shuffle(); //TODO: make this work
-           // string[] files = System.IO.Directory.GetFiles(SourceFileList);
+            Workspace.Shuffle(SourceFileList);
 
             // Copy the files and overwrite destination files if they already exist.
             foreach (string s in SourceFileList)
             {
                 // Use static Path methods to extract only the file name from the path.
-                string fileName = System.IO.Path.GetFileName(s);
-                string destFile = System.IO.Path.Combine(DestinationPath, fileName);
-                System.IO.File.Copy(s, destFile, true); //True overwrites files in the destination  if they have the same name
+                string fileName = Path.GetFileName(s);
+                string destFile = Path.Combine(DestinationPath, fileName);
+                System.IO.File.Copy(s, destFile, true); 
             }
         }
         private void MeasureSourceSize()
@@ -244,7 +241,6 @@ namespace RandomFileSelector
             }
             return true;
         }
-
         #endregion //Private Methods
     }
 }
