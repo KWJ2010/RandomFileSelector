@@ -155,7 +155,7 @@ namespace RandomFileSelector
         private static string _windowTitle;
         public static string WindowTitle
         {
-            get { return _copyrightLabel; }
+            get { return _windowTitle; }
             set
             {
                 if (value != _windowTitle)
@@ -182,7 +182,7 @@ namespace RandomFileSelector
             BorderColor = NormalColor;
             ForegroundColor = new SolidColorBrush(Color.FromArgb(255, 252, 252, 252));
 
-            WindowTitle = "Randomized File Selector";
+            WindowTitle = "Random File Copier";
             CopyrightLabel = "Provided by: KWJ2010, All rights Reserved";
         }
 

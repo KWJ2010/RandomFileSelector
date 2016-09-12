@@ -10,7 +10,7 @@
         MouseLeftButtonDown="MoveWindow"
         Background="Transparent"
         Foreground="Black"
-        Title="{Binding Path=(local:Workspace.WindowTitle), UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+        Title="{Binding Path=(local:Workspace.WindowTitle), Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
         Height="350"
         Width="550"
         >
@@ -50,7 +50,6 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <!--TODO: update icon-->
                 <Image Grid.Column="0" Grid.Row="0" Source="pack://application:,,,/RandomFileSelector;component/Themes/Icons/FileSwapblue.png" Width="20"/>
 
                 <!--TODO: Bind this title to update to the name of the source and destination folders -->
