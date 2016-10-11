@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Xml.Serialization;
 
@@ -26,9 +28,21 @@ namespace RandomFileSelector
         }
         #endregion // Static INotify Event
 
+        #region ICommands
+        private static ICommand activateWindowCommand;
+        private static ICommand deactivateWindowCommand;
+        public static ICommand ActivateWindowCommand
+        {
+            get { return activateWindowCommand ?? (activateWindowCommand = new CommandHelper(() => ActivateWindow())); }
+        }
+        public static ICommand DeactivateWindowCommand
+        {
+            get { return deactivateWindowCommand ?? (deactivateWindowCommand = new CommandHelper(() => DeactivateWindow())); }
+        }
+        #endregion // ICommand
+
         #region Interface Variables
         private static SolidColorBrush _warningColor;
-        [XmlIgnore]
         public static SolidColorBrush WarningColor
         {
             get { return _warningColor; }
@@ -43,7 +57,6 @@ namespace RandomFileSelector
         }
 
         private static SolidColorBrush _errorColor;
-        [XmlIgnore]
         public static SolidColorBrush ErrorColor
         {
             get
@@ -61,7 +74,6 @@ namespace RandomFileSelector
         }
 
         private static SolidColorBrush _normalColor;
-        [XmlIgnore]
         public static SolidColorBrush NormalColor
         {
             get
@@ -79,7 +91,6 @@ namespace RandomFileSelector
         }
 
         private static SolidColorBrush _goodColor;
-        [XmlIgnore]
         public static SolidColorBrush GoodColor
         {
             get { return _goodColor; }
@@ -94,7 +105,6 @@ namespace RandomFileSelector
         }
 
         private static SolidColorBrush _backgroundColor;
-        [XmlIgnore]
         public static SolidColorBrush BackgroundColor
         {
             get { return _backgroundColor; }
@@ -109,7 +119,6 @@ namespace RandomFileSelector
         }
 
         private static SolidColorBrush _borderColor;
-        [XmlIgnore]
         public static SolidColorBrush BorderColor
         {
             get { return _borderColor; }
@@ -124,7 +133,6 @@ namespace RandomFileSelector
         }
 
         private static SolidColorBrush _foregroundColor;
-        [XmlIgnore]
         public static SolidColorBrush ForegroundColor
         {
             get { return _foregroundColor; }
@@ -135,6 +143,48 @@ namespace RandomFileSelector
                     _foregroundColor = value;
                     NotifyStaticPropertyChanged("ForegroundColor");
                 }
+            }
+        }
+
+        private static SolidColorBrush deactivateBorderColorBrush;
+        public static SolidColorBrush DeactivateBorderColorBrush
+        {
+            get { return deactivateBorderColorBrush; }
+            set
+            {
+                if (value != deactivateBorderColorBrush)
+                {
+                    deactivateBorderColorBrush = value;
+                    NotifyStaticPropertyChanged("DeactivateBorderColorBrush");
+                };
+            }
+        }
+
+        private static SolidColorBrush previousBorderColorBrush;
+        public static SolidColorBrush PreviousBorderColorBrush
+        {
+            get { return previousBorderColorBrush; }
+            set
+            {
+                if (value != previousBorderColorBrush)
+                {
+                    previousBorderColorBrush = value;
+                    NotifyStaticPropertyChanged("PreviousBorderColorBrush");
+                };
+            }
+        }
+
+        private static Thickness windowBorderThickness;
+        public static Thickness WindowBorderThickness
+        {
+            get { return windowBorderThickness; }
+            set
+            {
+                if (value != windowBorderThickness)
+                {
+                    windowBorderThickness = value;
+                    NotifyStaticPropertyChanged("WindowBorderThickness");
+                };
             }
         }
 
@@ -177,6 +227,8 @@ namespace RandomFileSelector
             ErrorColor = new SolidColorBrush(Color.FromArgb(255, 233, 136, 5));
             NormalColor = new SolidColorBrush(Color.FromArgb(255, 62, 120, 179));
             GoodColor = new SolidColorBrush(Color.FromArgb(255, 58, 165, 121));
+            DeactivateBorderColorBrush = new SolidColorBrush(Color.FromArgb(255, 186, 186, 186));
+            PreviousBorderColorBrush = new SolidColorBrush(Color.FromArgb(255, 62, 120, 179));
 
             BackgroundColor = NormalColor;
             BorderColor = NormalColor;
@@ -195,6 +247,12 @@ namespace RandomFileSelector
             BackgroundColor = NormalColor;
             BorderColor = NormalColor;
             ForegroundColor = new SolidColorBrush(Color.FromArgb(255, 252, 252, 252));
+            WindowBorderThickness = new Thickness(1, 1, 1, 1);
+        }
+        public async static void ResetColors(int resetTimer)
+        {
+            await Task.Delay(resetTimer);
+            ResetColors();
         }
         /// <summary>
         /// Resets the Copyright text
@@ -203,6 +261,20 @@ namespace RandomFileSelector
         {
             CopyrightLabel = "Provided by: KWJ2010, All rights Reserved";
         }
+        #region Window Activated and Deactivated
+        public static void DeactivateWindow()
+        {
+            PreviousBorderColorBrush = BorderColor;
+            BorderColor = DeactivateBorderColorBrush;
+            BackgroundColor = DeactivateBorderColorBrush;
+        }
+
+        public static void ActivateWindow()
+        {
+            BorderColor = PreviousBorderColorBrush;
+            BackgroundColor = PreviousBorderColorBrush;
+        }
+        #endregion //Window Activated and Deactivated
         #endregion //Public Methods
     }
 }

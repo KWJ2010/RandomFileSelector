@@ -1,20 +1,32 @@
 ﻿<Window x:Class="RandomFileSelector.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:RandomFileSelector"
-        SnapsToDevicePixels="True" UseLayoutRounding="True" WindowStartupLocation="CenterScreen"
-        WindowStyle="None" AllowsTransparency="True" ResizeMode="CanResize"
-        Icon="pack://application:,,,/RandomFileSelector;component/Themes/Icons/FileSwapBlue.png"
+        WindowStartupLocation="CenterScreen"
         MouseLeftButtonDown="MoveWindow"
+        SnapsToDevicePixels="True" 
+        AllowsTransparency="True" 
         Background="Transparent"
+        UseLayoutRounding="True"
+        ResizeMode="CanResize"
+        WindowStyle="None" 
         Foreground="Black"
         Title="{Binding Path=(local:Workspace.WindowTitle), Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+        Icon="pack://application:,,,/RandomFileSelector;component/Themes/Icons/FileSwapBlue.png"
         Height="350"
         Width="550"
         >
-
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Activated">
+            <i:InvokeCommandAction Command="{Binding Path=(local:Workspace.ActivateWindowCommand)}"/>
+        </i:EventTrigger>
+        <i:EventTrigger EventName="Deactivated">
+            <i:InvokeCommandAction Command="{Binding Path=(local:Workspace.DeactivateWindowCommand)}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Border x:Name="Border" BorderBrush="{Binding Path=(local:Workspace.BorderColor), UpdateSourceTrigger=PropertyChanged}" BorderThickness="2" Margin="9" >
         <Border.Background>
             <SolidColorBrush Color="WhiteSmoke" Opacity="0.95"/>
@@ -170,10 +182,10 @@
                 <TextBlock x:Name="SourcePathLabel" Text="{Binding Path=SourcePath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                        Grid.Column="1" Grid.Row="1" IsEnabled="False" TextWrapping="WrapWithOverflow"
                        />
+                
                 <TextBlock x:Name="SourceSize" Text="{Binding Path=SourceSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                        Grid.Column="2" Grid.Row="1" IsEnabled="False" TextWrapping="WrapWithOverflow"
                        />
-
 
                 <Button x:Name="SelectDestinationPath" Command="{Binding SelectDestinationPathCommand}"  Grid.Column="0" Grid.Row="3" Content="Select Destination Folder"/>
 
