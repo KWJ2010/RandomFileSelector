@@ -150,6 +150,8 @@ namespace RandomFileSelector
         }
         private void StartCopyFiles()
         {
+            //TODO: make async and update progress bar
+            
             //Change colors, check for errors, copy files
             if (CheckInputs())
             {
