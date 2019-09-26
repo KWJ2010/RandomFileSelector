@@ -12,6 +12,10 @@ using System.Xml.Serialization;
 namespace RandomFileSelector
 {
     /// <summary>
+    /// 
+    ///This dosn't seem to be an actual singleton, its looks like it is just a static class for this UI components.
+    ///Need to read more about what that is and how to solve this problem better...
+    /// 
     /// Yes, static classes are not recomended over the Singleton pattern due to possible memory leaks among other reasons. 
     /// This class is different in that as long as this program is running, it will need the variables stored here as the MainWindow is bound to these properties.
     /// This is overkill for this program, but is a template I am using for a much larger program with many views and user controls that need to update features on
